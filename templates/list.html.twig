@@ -1,0 +1,78 @@
+<html>
+<head>
+    <title>Welcome to Symfony!</title>
+    <meta http-equiv="refresh" content="60">
+    <!-- Style -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/fresh-bootstrap-table.css" rel="stylesheet" />
+    <link href="/assets/css/demo.css" rel="stylesheet" />
+
+    <!-- Fonts and icons -->
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+{% if centers %}
+    {% if playAlarm == true %}
+        <audio src="/alarm.mp3" autoplay="autoplay" loop="loop"></audio>
+    {% endif %}
+    <h3>Updated at {{ 'now'|date }}</h3>
+    <a type="button" style="color: #212529; font-size: large" class="btn btn-primary" href="{{ path('list_users') }}">Inapoi catre lista de useri</a>
+    {% if campaigns %}
+        <div class="fresh-table full-color-orange">
+            <h3>Lista vaccinuri</h3>
+            <table id="fresh-table" class="table">
+                <tr>
+                    <th>Nume</th>
+                    <th>Vaccin</th>
+                    <th>Interval intre doze</th>
+                    <th>Inceput</th>
+                    <th>Sfarsit</th>
+                    <th>In stock</th>
+                    <th>Incepere programari</th>
+                    <th>Incheiere programari</th>
+                </tr>
+                {% for campaign in campaigns %}
+                    <tr>
+                        <td>{{ campaign.name }}</td>
+                        <td>{{ campaign.vaccineName }}</td>
+                        <td>{{ campaign.daysFromPrev }}</td>
+                        <td>{{ campaign.startAt }}</td>
+                        <td>{{ campaign.endAt }}</td>
+                        <td>{{ campaign.hasStock ? 'Da' : 'Nu' }}</td>
+                        <td>{{ campaign.startAppointmentDate }}</td>
+                        <td>{{ campaign.endAppointmentDate }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+
+    <div class="fresh-table full-color-orange">
+        <h3>Centre de vaccinare in {{ centers.0.countyName }}</h3>
+        <table id="fresh-table" class="table">
+            <tr>
+                <th>Nume</th>
+                <th>Judet</th>
+                <th>Oras</th>
+                <th>Adresa</th>
+                <th>Locuri libere</th>
+            </tr>
+            {% for center in centers %}
+                <tr>
+                    <td>{{ center.name }}</td>
+                    <td>{{ center.countyName }}</td>
+                    <td>{{ center.localityName }}</td>
+                    <td>{{ center.address }}</td>
+                    <td>{{ center.availableSlots  }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% else %}
+    Your cookie named SESSION has expired
+{% endif %}
+
+</body>
+</html>

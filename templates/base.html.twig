@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Symfony!</title>
+    <!-- Style -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/fresh-bootstrap-table.css" rel="stylesheet" />
+    <link href="/assets/css/demo.css" rel="stylesheet" />
+
+    <!-- Fonts and icons -->
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<h3>Updated at {{ 'now'|date }}</h3>
+{% if users %}
+    <div class="fresh-table full-color-orange">
+        <h3>Lista useri</h3>
+        <table id="fresh-table" class="table">
+            <tr>
+                <th>Nume</th>
+                <th>Prenume</th>
+                <th>CNP</th>
+                <th>Categoria</th>
+                <th>Poate fi programat</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    {% set userUrl = path('checker', {countyID: user.recipientAddress.countyID,
+                        masterCategoryId: user.recipient.fkMasterPersonnelCategory,
+                        personnelCategoryId: user.recipient.fkPersonnelCategory,
+                        recipientId: user.recipient.pkRecipient,
+                        cnp: user.recipient.identificationCode}) %}
+                    <td>{{ user.recipient.familyName }}</td>
+                    <td>{{ user.recipient.firstName }}</td>
+                    <td>{{ user.recipient.identificationCode }}</td>
+                    <td>{{ user.recipient.namePersonnelCategory }}</td>
+                    <td>{{ (user.recipient.canBeAppointed ? '<a type="button" class="btn btn-primary" href=' ~ userUrl ~ '>' ~ 'Da' ~ '</a>' : '<button inactive type="button" class="btn btn-primary">Nu</button>') |raw }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% else %}
+    Your cookie named SESSION has expired
+{% endif %}
+
+</body>
+</html>
