@@ -22,6 +22,7 @@ class CheckerController extends AbstractController
      * @param int $masterCategoryId
      * @param int $personnelCategoryId
      * @param int $recipientId
+     * @param int $cnp
      * @return Response
      */
     public function index(int $countyID, int $masterCategoryId, int $personnelCategoryId, int $recipientId, int $cnp): Response
@@ -101,7 +102,7 @@ class CheckerController extends AbstractController
                 'json' => $contentJson,
             ]
         );
-        return json_decode($response->getContent(), true);
+        return $response->toArray();
     }
 
     private function getCampaigns(): array
@@ -116,7 +117,7 @@ class CheckerController extends AbstractController
                 ],
             ]
         );
-        return json_decode($responseCampaigns->getContent(), true);
+        return $responseCampaigns->toArray();
     }
 
     private function getCampaignData(string $campaignID): array
@@ -131,7 +132,7 @@ class CheckerController extends AbstractController
                 ],
             ]
         );
-        return json_decode($responseCampaign->getContent(), true);
+        return $responseCampaign->toArray();
     }
 
     private function getUsers(array $usersJson): array
@@ -147,6 +148,6 @@ class CheckerController extends AbstractController
                 'json' => $usersJson,
             ]
         );
-        return json_decode($response->getContent(), true);
+        return $response->toArray();
     }
 }
