@@ -97,7 +97,6 @@ class CheckerController extends AbstractController
             [
                 'headers' => [
                     'cookie' => 'SESSION=' . $_ENV['SITE_COOKIE'],
-                    'content-type' => 'application/json;charset=UTF-8',
                 ],
                 'json' => $contentJson,
             ]
@@ -113,7 +112,6 @@ class CheckerController extends AbstractController
             [
                 'headers' => [
                     'cookie' => 'SESSION=' . $_ENV['SITE_COOKIE'],
-                    'content-type' => 'application/json;charset=UTF-8',
                 ],
             ]
         );
@@ -128,7 +126,6 @@ class CheckerController extends AbstractController
             [
                 'headers' => [
                     'cookie' => 'SESSION=' . $_ENV['SITE_COOKIE'],
-                    'content-type' => 'application/json;charset=UTF-8',
                 ],
             ]
         );
@@ -143,7 +140,6 @@ class CheckerController extends AbstractController
             [
                 'headers' => [
                     'cookie' => 'SESSION=' . $_ENV['SITE_COOKIE'],
-                    'content-type' => 'application/json;charset=UTF-8',
                 ],
                 'json' => $usersJson,
             ]
