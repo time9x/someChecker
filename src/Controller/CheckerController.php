@@ -10,6 +10,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class CheckerController extends AbstractController
 {
     private $client;
+    private $userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36';
+    private $contentType = 'application/json;charset=UTF-8';
 
     public function __construct(HttpClientInterface $client)
     {
@@ -97,10 +99,14 @@ class CheckerController extends AbstractController
             [
                 'headers' => [
                     'cookie' => 'SESSION=' . $_ENV['SITE_COOKIE'],
+                    'user-agent' => $this->userAgent,
                 ],
                 'json' => $contentJson,
             ]
         );
+        if ($response->getStatusCode() !== 200 || $response->getHeaders()['content-type'][0] !== $this->contentType) {
+            return array();
+        }
         return $response->toArray();
     }
 
@@ -112,9 +118,13 @@ class CheckerController extends AbstractController
             [
                 'headers' => [
                     'cookie' => 'SESSION=' . $_ENV['SITE_COOKIE'],
+                    'user-agent' => $this->userAgent,
                 ],
             ]
         );
+        if ($responseCampaigns->getStatusCode() !== 200 || $responseCampaigns->getHeaders()['content-type'][0] !== $this->contentType) {
+            return array();
+        }
         return $responseCampaigns->toArray();
     }
 
@@ -126,9 +136,13 @@ class CheckerController extends AbstractController
             [
                 'headers' => [
                     'cookie' => 'SESSION=' . $_ENV['SITE_COOKIE'],
+                    'user-agent' => $this->userAgent,
                 ],
             ]
         );
+        if ($responseCampaign->getStatusCode() !== 200 || $responseCampaign->getHeaders()['content-type'][0] !== $this->contentType) {
+            return array();
+        }
         return $responseCampaign->toArray();
     }
 
@@ -140,10 +154,14 @@ class CheckerController extends AbstractController
             [
                 'headers' => [
                     'cookie' => 'SESSION=' . $_ENV['SITE_COOKIE'],
+                    'user-agent' => $this->userAgent,
                 ],
                 'json' => $usersJson,
             ]
         );
+        if ($response->getStatusCode() !== 200 || $response->getHeaders()['content-type'][0] !== $this->contentType) {
+            return array();
+        }
         return $response->toArray();
     }
 }
